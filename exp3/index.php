@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'inventory_db';
 $username = 'root';
-$password = 'A09.10.2005';
+$password = '';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

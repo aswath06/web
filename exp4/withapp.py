@@ -1,7 +1,6 @@
-with out backend:
-pip install flask flask_sqlalchemy flask_jwt_extended flask_bcrypt flask-cors
-app.py
-Without db
+# with backend:
+# pip install flask flask_sqlalchemy flask_jwt_extended flask_bcrypt flask-cors mysql-connector-python flask-mysql pymysql
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -11,8 +10,11 @@ import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banking.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:A09.10.2005@localhost/banking_db'
 app.config['JWT_SECRET_KEY'] = os.urandom(24).hex()
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db, bcrypt, jwt = SQLAlchemy(app), Bcrypt(app), JWTManager(app)
 
 class User(db.Model):
@@ -28,7 +30,7 @@ class Transaction(db.Model):
     amount = db.Column(db.Float, nullable=False)
 
 with app.app_context():
-    db.create_all()
+    db.create_all()  # This will create tables in MySQL
     User.query.filter(User.balance.is_(None)).update({User.balance: 1000.0}, synchronize_session=False)
     db.session.commit()
 
@@ -71,4 +73,3 @@ def transfer():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
