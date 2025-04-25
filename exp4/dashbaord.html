@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Dashboard</title>
+</head>
+<body>
+    <h2>Welcome to Your Bank Dashboard</h2>
+    <p>Your Balance: <span id="balance">Loading...</span></p>
+    <h3>Transfer Money</h3>
+    <input id="receiver" placeholder="Receiver Username">
+    <input type="number" id="amount" placeholder="Amount">
+    <button onclick="transferMoney()">Send Money</button>
+    <p id="message"></p>
+    <script>
+        async function fetchAPI(url, method = "GET", body = null) {
+            let token = localStorage.getItem("token");
+            if (!token) return "Please log in!";
+            let options = { method, headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" } };
+            if (body) options.body = JSON.stringify(body);
+            let res = await fetch(url, options);
+            return res.ok ? res.json() : "Error";
+        }
+        async function getBalance() {
+            let data = await fetchAPI("http://127.0.0.1:5000/balance");
+            document.getElementById("balance").innerText = data.balance ? `$${data.balance}` : data;
+        }
+        async function transferMoney() {
+            let receiver = document.getElementById("receiver").value;
+            let amount = parseFloat(document.getElementById("amount").value);
+            let result = await fetchAPI("http://127.0.0.1:5000/transfer", "POST", { receiver, amount });
+            document.getElementById("message").innerText = result.message || result;
+            getBalance();
+        }
+        getBalance();
+    </script>
+</body>
+</html>

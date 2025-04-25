@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Banking</title>
+    <style>input, button {display: block; margin: 10px 0;}</style>
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <div id="message"></div>
+    <h2>Register</h2>
+    <form id="registerForm">
+        <input type="text" id="newUsername" placeholder="New Username" required>
+        <input type="password" id="newPassword" placeholder="New Password" required>
+        <button type="submit">Register</button>
+    </form>
+    <div id="registerMessage"></div>
+    <script>
+        const apiCall = async (url, method = "GET", body = null) => {
+            const options = { method, headers: { "Content-Type": "application/json" } };
+            if (body) options.body = JSON.stringify(body);
+            const res = await fetch(url, options);
+            return res.ok ? res.json() : { message: "Error" };
+        };
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const { username, password } = e.target.elements;
+            const res = await apiCall("http://127.0.0.1:5000/login", "POST", { username: username.value, password: password.value });
+            if (res.token) {
+                localStorage.setItem("token", res.token);
+                window.location.href = "dashboard.html";
+            } else {
+                document.getElementById("message").innerText = res.message;
+            }
+        });
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const { newUsername, newPassword } = e.target.elements;
+            const res = await apiCall("http://127.0.0.1:5000/register", "POST", { username: newUsername.value, password: newPassword.value });
+            document.getElementById("registerMessage").innerText = res.message;
+        });
+    </script>
+</body>
+</html>

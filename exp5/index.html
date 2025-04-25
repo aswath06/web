@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Task Manager</title>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <input id="taskTitle" placeholder="Task title">
+    <input id="taskDescription" placeholder="Task description">
+    <button onclick="addTask()">Add</button>
+    <ul id="taskList"></ul>
+    <script>
+        document.addEventListener("DOMContentLoaded", fetchTasks);
+        function fetchTasks() {
+            fetch("http://localhost:3000/tasks")
+                .then(res => res.json())
+                .then(tasks => {
+                    taskList.innerHTML = tasks.map(task => `
+                        <li>
+                            <span style="text-decoration:${task.completed ? 'line-through' : 'none'}">${task.title} - ${task.description}</span>
+                            <button onclick="completeTask(${task.id})">✔</button>
+                            <button onclick="deleteTask(${task.id})">✖</button>
+                        </li>
+                    `).join("");
+                });
+        }
+        function addTask() {
+            const title = taskTitle.value, description = taskDescription.value;
+            if (!title) return alert("Task title is required");
+            fetch("http://localhost:3000/tasks", {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, description })
+            }).then(fetchTasks);
+        }
+        function completeTask(id) {
+            fetch(`http://localhost:3000/tasks/${id}/complete`, { method: "PUT" }).then(fetchTasks);
+        }
+        function deleteTask(id) {
+            fetch(`http://localhost:3000/tasks/${id}`, { method: "DELETE" }).then(fetchTasks);
+        }
+    </script>
+</body>
+</html>

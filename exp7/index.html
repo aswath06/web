@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #user-container { width: 25%; float: left; border-right: 1px solid #ccc; }
+        #chat-container { width: 70%; float: right; }
+        #user-list { list-style: none; padding: 0; }
+        .user-item { cursor: pointer; padding: 10px; border-bottom: 1px solid #ccc; }
+        .user-item:hover, .selected { background: #d0eaff; }
+        #chat-box { height: 300px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px; }
+        .message { padding: 5px; margin: 5px 0; border-radius: 5px; }
+        .incoming { background: #f1f1f1; }
+        .outgoing { background: #dcf8c6; text-align: right; }
+        input, button { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Chat Application</h2>
+    <div>
+        <input type="text" id="username" placeholder="Enter username">
+        <button onclick="setUsername()">Join</button>
+    </div>
+    <div style="display: flex;">
+        <div id="user-container">
+            <h3>Online Users</h3>
+            <ul id="user-list"></ul>
+        </div>
+        <div id="chat-container">
+            <h3>Chat</h3>
+            <div id="chat-box"></div>
+            <input type="text" id="message" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        const socket = new WebSocket("ws://localhost:5002");
+        let currentUser = "", selectedUser = "", messages = {};
+        socket.onmessage = ({ data }) => {
+            const msg = JSON.parse(data);
+            if (msg.type === "user_list") updateUserList(msg.users);
+            else if (msg.type === "message") addMessage(msg.sender, msg.content, false);
+        };
+        function setUsername() {
+            currentUser = document.getElementById("username").value.trim();
+            if (currentUser) socket.send(JSON.stringify({ type: "set_username", username: currentUser }));
+        }
+        function updateUserList(users) {
+            const list = document.getElementById("user-list");
+            list.innerHTML = users.filter(u => u !== currentUser)
+                .map(u => `<li class="user-item" onclick="selectUser('${u}', this)">${u}</li>`).join("");
+            if (!selectedUser && users.length) selectUser(users[0], list.firstChild);
+        }
+        function selectUser(user, el) {
+            selectedUser = user;
+            document.querySelectorAll(".user-item").forEach(i => i.classList.remove("selected"));
+            el.classList.add("selected");
+            renderChat();
+        }
+        function sendMessage() {
+            const msg = document.getElementById("message").value.trim();
+            if (msg && selectedUser) {
+                socket.send(JSON.stringify({ type: "message", sender: currentUser, receiver: selectedUser, content: msg }));
+                addMessage("You", msg, true);
+                document.getElementById("message").value = "";
+            }
+        }
+        function addMessage(sender, text, outgoing) {
+            messages[selectedUser] = messages[selectedUser] || [];
+            messages[selectedUser].push({ sender, text, outgoing });
+            if (sender === selectedUser || sender === "You") renderChat();
+        }
+        function renderChat() {
+            document.getElementById("chat-box").innerHTML = (messages[selectedUser] || [])
+                .map(m => `<div class="message ${m.outgoing ? "outgoing" : "incoming"}"><b>${m.sender}:</b> ${m.text}</div>`).join("");
+        }
+    </script>
+</body>
+</html>

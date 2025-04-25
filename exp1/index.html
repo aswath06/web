@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>My Portfolio</header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Welcome to My Portfolio</h2>
+        <p>Hello! I'm a passionate mobile app developer. Explore my work in projects page.</p>
+        <h3>Skills</h3>
+        <ul>
+            <li>Flutter, React Native</li>
+            <li>HTML, CSS, JavaScript</li>
+            <li>React, Node.js, Express.js</li>
+            <li>MySQL</li>
+        </ul>
+    </div>
+    <footer>&copy; 2025 My Portfolio</footer>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Me</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>About Me</header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Who Am I?</h2>
+        <p>I am a passionate mobile and web developer with expertise in Flutter, React Native, and modern web technologies.</p>
+        <h3>My Journey</h3>
+        <p>I started my career as a web developer, mastering HTML, CSS, and JavaScript. Over time, I expanded into mobile development, building cross-platform applications using Flutter and React Native.</p>
+    </div>
+    <footer>&copy; 2025 My Portfolio</footer>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>My Projects</header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Projects</h2>
+        <p>Here are some of the projects I have worked on.</p>
+        <h3>1. Income Expense App</h3>
+        <h3>2. Asset Managing App</h3>
+        <h3>3. Todo App</h3>
+        <h3>4. Portfolio Website</h3>
+    </div>
+    <footer>&copy; 2025 My Portfolio</footer>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Me</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>Contact Me</header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h2>Contact Form</h2>        
+        <form action="#" method="post">
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2025 My Portfolio</p>
+    </footer>
+</body>
+</html>
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #f0f2f5, #e0eafc);
+    color: #333;
+    line-height: 1.6;
+}
+header{
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    padding: 25px 0;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+nav{
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+nav ul li{
+    margin: 0 15px;
+}
+nav ul li a{
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 30px;
+    transition: background 0.3s, color 0.3s;
+}
+nav ul li a:hover{
+    background: #667eea;
+    color: #fff;
+}
+.container{
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+h2{
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+h3{
+    font-size: 1.5rem;
+    color: #555;
+    margin-top: 25px;
+}
+p{
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+ul{
+    padding-left: 25px;
+    list-style-type: disc;
+}
+ul li{
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+input,textarea{
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: box-shadow 0.3s;
+}
+input:focus,textarea:focus{
+    box-shadow: 0 0 5px #667eea;
+    outline: none;
+}
+button[type="submit"]{
+    padding: 12px;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button[type="submit"]:hover{
+    background: linear-gradient(to right, #5a67d8, #6b46c1);
+}
+footer{
+    background-color: #333;
+    color: #eee;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    margin-top: 60px;
+    border-top: 4px solid #667eea;
+}
+@media (max-width: 768px){
+    nav ul{
+        flex-direction: column;
+        align-items: center;
+    }
+    .container{
+        margin: 20px;
+        padding: 30px;
+    }
+    h2{
+        font-size: 1.6rem;
+    }
+    h3{
+        font-size: 1.2rem;
+    }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      background: #bba1cc;
+      color: white;
+      text-align: center;
+      padding: 50px 0;
+    }
+    .choice {
+      display: inline-block;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      margin: 10px;
+      border-radius: 50%;
+      font-size: 40px;
+      border: 3px solid #8c7575;
+      cursor: pointer;
+    }
+    .rock { background: #c47896; }
+    .paper { background: #9191c4; }
+    .scissors { background: #7bbaa7; }
+  </style>
+</head>
+<body>
+  <h1>Rock Paper Scissors</h1>
+  <p>Score: <span id="score">0</span></p>
+  <div id="choices">
+    <div class="choice rock" data-choice="rock">✊</div>
+    <div class="choice paper" data-choice="paper">✋</div>
+    <div class="choice scissors" data-choice="scissors">✌</div>
+  </div>
+  <p id="result">Choose your move!</p>
+  <script>
+    let score = 0;
+    const scoreElement = document.getElementById('score');
+    const resultElement = document.getElementById('result');
+    const gameChoices = ['rock', 'paper', 'scissors'];
+    document.getElementById('choices').addEventListener('click', (e) => {
+      if (!e.target.classList.contains('choice')) return;
+      const userChoice = e.target.dataset.choice;
+      const computerChoice = gameChoices[Math.floor(Math.random() * 3)];
+      const result = userChoice === computerChoice ? 'draw' :
+        (userChoice === 'rock' && computerChoice === 'scissors') ||
+        (userChoice === 'paper' && computerChoice === 'rock') ||
+        (userChoice === 'scissors' && computerChoice === 'paper') ? 'user' : 'computer';
+      if (result === 'user') {
+        score++;
+        resultElement.textContent = `You won! ${userChoice} beats ${computerChoice}`;
+      } else if (result === 'computer') {
+        resultElement.textContent = `You lost! ${computerChoice} beats ${userChoice}`;
+      } else {
+        resultElement.textContent = `It's a draw! You both chose ${userChoice}`;
+      }
+      scoreElement.textContent = score;
+    });
+  </script>
+</body>
+</html>
